@@ -4,16 +4,7 @@ import { resolve } from 'path'
 import dts from 'vite-plugin-dts'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    dts({
-      include: ['src/**/*.ts', 'src/**/*.vue'],
-      beforeWriteFile: (filePath, content) => ({
-        filePath: filePath.replace(/src/, ''),
-        content
-      })
-    })
-  ],
+  plugins: [vue(), dts()],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
@@ -25,6 +16,10 @@ export default defineConfig({
       output: {
         globals: {
           vue: 'Vue'
+        },
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name === 'style.css') return 'style.css';
+          return assetInfo.name;
         }
       }
     }
