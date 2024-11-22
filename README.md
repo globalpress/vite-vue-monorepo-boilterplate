@@ -10,11 +10,16 @@ This is a monorepo template for creating a Vue 3 library with TypeScript and Vit
 │   │   ├── src/
 │   │   │   ├── components/     # Vue components
 │   │   │   │   └── HelloWorld.vue
+│   │   │   ├── style.css      # Tailwind CSS imports
 │   │   │   └── index.ts       # Library entry point & exports
 │   │   ├── package.json       # Library package config
 │   │   ├── tsconfig.json      # TypeScript config for lib
 │   │   ├── tsconfig.node.json # TypeScript config for Vite
 │   │   └── vite.config.ts     # Vite config (library mode)
+│   │
+│   ├── tailwind/              # Shared Tailwind config
+│   │   ├── preset.js          # Tailwind preset (colors, fonts, etc.)
+│   │   └── package.json       # Tailwind package config
 │   │
 │   └── playground/            # Testing application
 │       ├── src/
@@ -32,16 +37,18 @@ This is a monorepo template for creating a Vue 3 library with TypeScript and Vit
 ├── package.json              # Root package config & scripts
 ├── pnpm-workspace.yaml       # PNPM workspace config
 └── README.md                 # Documentation
+```
 
 Key Files:
 - packages/lib/src/index.ts              # Main library exports
 - packages/lib/src/components/*.vue      # Library components
+- packages/lib/src/style.css             # Tailwind CSS imports
 - packages/lib/vite.config.ts            # Library build config
+- packages/tailwind/preset.js            # Shared Tailwind configuration
 - packages/playground/src/App.vue        # Playground testing app
 - packages/playground/vite.config.ts     # Dev server config (port 5003)
 - pnpm-workspace.yaml                    # Defines workspace packages
 - package.json                           # Root scripts (pnpm start)
-```
 
 ## Prerequisites
 
@@ -99,6 +106,34 @@ If you need to run the packages separately:
 3. Use them in the playground app (`packages/playground/src/`)
 4. Changes in the library will automatically trigger a rebuild
 5. The playground will hot-reload to reflect the changes
+
+### Using Tailwind CSS
+
+This project uses a shared Tailwind CSS configuration to maintain consistent styling across both the library and playground:
+
+1. **Shared Configuration**
+   - The `packages/tailwind` package contains the shared Tailwind preset
+   - Edit `packages/tailwind/preset.js` to modify theme settings (colors, fonts, etc.)
+
+2. **Using in Library Components**
+   - Tailwind classes can be used directly in any library component
+   - Example:
+     ```vue
+     <template>
+       <div class="text-primary-500 text-lg">
+         <!-- Your component content -->
+       </div>
+     </template>
+     ```
+
+3. **Custom Styles**
+   - Add custom component styles in `packages/lib/src/style.css`
+   - These styles will be automatically available in both library and playground
+
+4. **Extending Tailwind**
+   - To extend the Tailwind configuration:
+     1. Modify `packages/tailwind/preset.js`
+     2. The changes will automatically apply to both library and playground
 
 ### Building for Production
 
